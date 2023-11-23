@@ -14,4 +14,15 @@ class Api {
 
     throw Exception('Failed to load $breed random image');
   }
+
+  Future<List<String>> getImagesByBreed(String breed) async {
+    final response = await http.get(Uri.parse('$_baseUrl/breed/$breed/images'));
+    if (response.statusCode == 200) {
+      return (jsonDecode(response.body)['message'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+
+    throw Exception('Failed to load $breed images');
+  }
 }
