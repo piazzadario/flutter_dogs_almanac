@@ -18,9 +18,7 @@ class Api {
   Future<List<String>> getImagesByBreed(String breed) async {
     final response = await http.get(Uri.parse('$_baseUrl/breed/$breed/images'));
     if (response.statusCode == 200) {
-      return (jsonDecode(response.body)['message'] as List<dynamic>)
-          .map((e) => e.toString())
-          .toList();
+      return List.from(jsonDecode(response.body)['message']);
     }
 
     throw Exception('Failed to load $breed images');
@@ -34,6 +32,19 @@ class Api {
         .get(Uri.parse('$_baseUrl/breed/$breed/$subBreed/images/random'));
     if (response.statusCode == 200) {
       return jsonDecode(response.body)['message'];
+    }
+
+    throw Exception('Failed to load $breed/$subBreed images');
+  }
+
+  Future<List<String>> getImagesBySubBreed({
+    required String breed,
+    required String subBreed,
+  }) async {
+    final response =
+        await http.get(Uri.parse('$_baseUrl/breed/$breed/$subBreed/images'));
+    if (response.statusCode == 200) {
+      return List.from(jsonDecode(response.body)['message']);
     }
 
     throw Exception('Failed to load $breed/$subBreed images');
