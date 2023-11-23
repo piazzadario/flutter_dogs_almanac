@@ -1,4 +1,4 @@
-import 'package:dogs_almanac/pages/all_breeds_page.dart';
+import 'package:dogs_almanac/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class DogsAlmanac extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const AllBreedsPage(),
+      home: const HomePage(),
     );
   }
 }
