@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dogs_almanac/models/breed.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
@@ -48,5 +49,15 @@ class Api {
     }
 
     throw Exception('Failed to load $breed/$subBreed images');
+  }
+
+  Future<List<Breed>> getAllBreeds() async {
+    final response = await http.get(Uri.parse('$_baseUrl/breeds/list/all'));
+    if (response.statusCode == 200) {
+      final breedsMap = jsonDecode(response.body)['message'] as Map;
+      return breedsMap.entries.map(Breed.fromMapEntry).toList();
+    }
+
+    throw Exception('Failed to load breeds');
   }
 }
