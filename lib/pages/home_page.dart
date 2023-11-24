@@ -1,3 +1,4 @@
+import 'package:dogs_almanac/pages/breeds_search_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -30,7 +31,15 @@ class HomePage extends StatelessWidget {
                 height: 32,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return BreedsSearchPage(title: 'Random pic by breed');
+                      },
+                    ),
+                  );
+                },
                 child: const Text('Random pic by breed'),
               ),
               const SizedBox(
