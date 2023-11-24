@@ -2,6 +2,7 @@ import 'package:dogs_almanac/bloc/dog_breeds_bloc.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/extensions/string_extension.dart';
+import 'package:dogs_almanac/pages/random_pic_page.dart';
 import 'package:dogs_almanac/states/dog_breeds_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,7 @@ class BreedsSearchPage extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             case RequestStatus.failed:
-              return _BreedsSearchError();
+              return const _BreedsSearchError();
             case RequestStatus.success:
               return Column(
                 children: [
@@ -70,8 +71,20 @@ class BreedsSearchPage extends StatelessWidget {
                           padding: const EdgeInsets.all(12),
                           itemCount: filteredBreeds.length,
                           itemBuilder: (context, index) {
+                            final breed = filteredBreeds.elementAt(index);
                             return _BreedSearchResultCard(
-                                filteredBreeds.elementAt(index));
+                              breed,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return RandomPicPage(
+                                          breed: breed.split(' ').first);
+                                    },
+                                  ),
+                                );
+                              },
+                            );
                           },
                         );
                       },
@@ -134,8 +147,11 @@ class _EmptySearchResult extends StatelessWidget {
 class _BreedSearchResultCard extends StatelessWidget {
   final String breedName;
 
+  final VoidCallback onTap;
+
   const _BreedSearchResultCard(
     this.breedName, {
+    required this.onTap,
     super.key,
   });
 
@@ -143,7 +159,7 @@ class _BreedSearchResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Text(

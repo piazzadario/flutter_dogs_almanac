@@ -46,7 +46,18 @@ class HomePage extends StatelessWidget {
                 height: 12,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return BreedsSearchPage(
+                          title: 'Random pic by sub-breed',
+                          includeSubBreeds: true,
+                        );
+                      },
+                    ),
+                  );
+                },
                 child: const Text('Random pic by sub-breed'),
               ),
               const SizedBox(
