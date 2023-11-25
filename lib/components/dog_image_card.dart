@@ -16,6 +16,9 @@ class DogImageCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
       ),
       child: Image.network(
         imageUrl,
@@ -30,7 +33,11 @@ class DogImageCard extends StatelessWidget {
           );
         },
         errorBuilder: (_, __, ___) {
-          return const Text('Impossible to load image');
+          return const Center(
+              child: Text(
+            'Impossible to load image',
+            textAlign: TextAlign.center,
+          ));
         },
       ),
     );
