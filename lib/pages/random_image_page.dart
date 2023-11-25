@@ -7,6 +7,7 @@ import 'package:dogs_almanac/states/dog_random_image_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Displays a random image of a dog of a given [breed] and (optionally)[subBreed]
 class RandomPicPage extends StatelessWidget {
   final String breed;
   final String? subBreed;

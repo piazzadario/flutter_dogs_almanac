@@ -2,6 +2,7 @@ import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/models/breed.dart';
 import 'package:equatable/equatable.dart';
 
+/// Represents the list of the [breeds] associated to the request [status]
 class DogBreedsState extends Equatable {
   final RequestStatus status;
   final List<Breed> breeds;

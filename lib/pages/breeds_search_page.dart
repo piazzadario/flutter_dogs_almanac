@@ -4,7 +4,7 @@ import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/extensions/string_extension.dart';
 import 'package:dogs_almanac/models/breed.dart';
 import 'package:dogs_almanac/pages/images_list_page.dart';
-import 'package:dogs_almanac/pages/random_pic_page.dart';
+import 'package:dogs_almanac/pages/random_image_page.dart';
 import 'package:dogs_almanac/states/dog_breeds_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -8,6 +8,7 @@ import 'package:dogs_almanac/states/dog_images_list_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Displays the list of the dogs of a given [breed] and (optionally)[subBreed]
 class ImagesListPage extends StatefulWidget {
   final String breed;
   final String? subBreed;

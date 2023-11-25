@@ -2,6 +2,9 @@ import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:equatable/equatable.dart';
 
 class DogImagesListState extends Equatable {
+  /// Map in which:
+  ///   - [key] is the name of the breed (and optionally sub-breed)
+  ///   - [value] is the corresponding [BreedImages], including the request status
   final Map<String, BreedImages> map;
 
   const DogImagesListState({
@@ -29,6 +32,7 @@ class DogImagesListState extends Equatable {
         BreedImages.initial();
   }
 
+  /// Utility function to extract a key by a breed and (optionally) a sub-breed
   String _getBreedKey(String breed, {String? subBreed}) {
     if (subBreed != null) {
       return '$subBreed-$breed';
@@ -43,6 +47,7 @@ class DogImagesListState extends Equatable {
       ];
 }
 
+/// Represents the list of the image for a certaing breed associated to the request [status]
 class BreedImages extends Equatable {
   final RequestStatus status;
   final List<String> images;
