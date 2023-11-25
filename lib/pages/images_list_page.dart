@@ -1,5 +1,6 @@
 import 'package:dogs_almanac/bloc/dog_images_list_bloc.dart';
 import 'package:dogs_almanac/bloc/dog_random_image_bloc.dart';
+import 'package:dogs_almanac/components/dog_image_card.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/extensions/string_extension.dart';
@@ -60,14 +61,12 @@ class _ImagesListPageState extends State<ImagesListPage> {
               );
             case RequestStatus.success:
               return GridView.count(
+                padding: const EdgeInsets.all(8),
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
                 crossAxisCount: 2,
                 children: [
-                  ...imagesState.images.map((e) => Container(
-                        height: 200,
-                        width: 200,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(image: NetworkImage(e))),
-                      ))
+                  ...imagesState.images.map((image) => DogImageCard(image)),
                 ],
               );
           }

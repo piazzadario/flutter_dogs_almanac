@@ -1,4 +1,5 @@
 import 'package:dogs_almanac/bloc/dog_random_image_bloc.dart';
+import 'package:dogs_almanac/components/dog_image_card.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/extensions/string_extension.dart';
@@ -50,7 +51,7 @@ class RandomPicPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _DogImageCard(state.imageUrl!),
+                      DogImageCard(state.imageUrl!),
                       const SizedBox(
                         height: 12,
                       ),
@@ -99,39 +100,13 @@ class _RefetchRandomImageButton extends StatelessWidget {
             );
       },
       icon: const Icon(Icons.refresh),
-      label: Text('Get another $_buttonTitle image'),
+      label: Text('Change $_buttonTitle image'),
     );
   }
 
   String get _buttonTitle {
-    final breedText = subBreed != null
+    return subBreed != null
         ? '${subBreed?.capitalized()} ${breed.capitalized()}'
         : breed.capitalized();
-
-    return '$breedText Random Pic';
-  }
-}
-
-class _DogImageCard extends StatelessWidget {
-  final String imageUrl;
-
-  const _DogImageCard(
-    this.imageUrl, {
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 200,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-    );
   }
 }
