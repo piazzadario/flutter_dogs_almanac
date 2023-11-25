@@ -2,6 +2,7 @@ import 'package:dogs_almanac/bloc/dog_breeds_bloc.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/extensions/string_extension.dart';
+import 'package:dogs_almanac/models/breed.dart';
 import 'package:dogs_almanac/pages/images_list_page.dart';
 import 'package:dogs_almanac/pages/random_pic_page.dart';
 import 'package:dogs_almanac/states/dog_breeds_state.dart';
@@ -59,12 +60,18 @@ class BreedsSearchPage extends StatelessWidget {
                     child: ValueListenableBuilder(
                       valueListenable: _controller,
                       builder: (context, value, child) {
-                        final allBreeds = includeSubBreeds
-                            ? state.getAllSubBreeds()
-                            : state.breeds.map((b) => b.name);
+                        final List<_BreedSearchResult> allBreeds =
+                            includeSubBreeds
+                                ? state.breeds
+                                    .where((breed) => breed.hasSubBreeds)
+                                    .toSubBreedsSearchResult()
+                                : state.breeds.toBreedsSearchResult();
 
-                        final filteredBreeds = allBreeds.where((breedName) =>
-                            breedName.toLowerCase().contains(value.text));
+                        final filteredBreeds = allBreeds.where((result) =>
+                            result
+                                .toString()
+                                .toLowerCase()
+                                .contains(value.text));
 
                         if (filteredBreeds.isEmpty) {
                           return _EmptySearchResult(searchTerm: value.text);
@@ -74,21 +81,23 @@ class BreedsSearchPage extends StatelessWidget {
                           padding: const EdgeInsets.all(12),
                           itemCount: filteredBreeds.length,
                           itemBuilder: (context, index) {
-                            final breed = filteredBreeds.elementAt(index);
+                            final result = filteredBreeds.elementAt(index);
                             return _BreedSearchResultCard(
-                              breed,
+                              result,
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      // TODO: fix
                                       if (isList) {
                                         return ImagesListPage(
-                                          breed: breed.split(' ').first,
+                                          breed: result.breed,
+                                          subBreed: result.subBreed,
                                         );
                                       }
+
                                       return RandomPicPage(
-                                        breed: breed.split(' ').first,
+                                        breed: result.breed,
+                                        subBreed: result.subBreed,
                                       );
                                     },
                                   ),
@@ -155,12 +164,12 @@ class _EmptySearchResult extends StatelessWidget {
 }
 
 class _BreedSearchResultCard extends StatelessWidget {
-  final String breedName;
+  final _BreedSearchResult result;
 
   final VoidCallback onTap;
 
   const _BreedSearchResultCard(
-    this.breedName, {
+    this.result, {
     required this.onTap,
     super.key,
   });
@@ -173,11 +182,62 @@ class _BreedSearchResultCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            breedName.capitalized(),
+            _title,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
       ),
     );
+  }
+
+  String get _title {
+    return result.subBreed != null
+        ? '${result.subBreed?.capitalized()} ${result.breed.capitalized()}'
+        : result.breed.capitalized();
+  }
+}
+
+class _BreedSearchResult {
+  final String breed;
+  final String? subBreed;
+
+  _BreedSearchResult({
+    required this.breed,
+    this.subBreed,
+  });
+
+  @override
+  String toString() {
+    if (subBreed != null) {
+      return '${subBreed!.capitalized()} ${breed.capitalized()}';
+    }
+    return breed.capitalized();
+  }
+}
+
+extension on Breed {
+  _BreedSearchResult toBreedSearchResult() {
+    return _BreedSearchResult(breed: name);
+  }
+
+  List<_BreedSearchResult> toSubBreedSearchResult() {
+    return subBreeds
+        .map((subBreed) => _BreedSearchResult(breed: name, subBreed: subBreed))
+        .toList();
+  }
+}
+
+extension on Iterable<Breed> {
+  List<_BreedSearchResult> toSubBreedsSearchResult() {
+    List<_BreedSearchResult> result = [];
+    for (final breed in this) {
+      result.addAll(breed.toSubBreedSearchResult());
+    }
+
+    return result;
+  }
+
+  List<_BreedSearchResult> toBreedsSearchResult() {
+    return map((breed) => breed.toBreedSearchResult()).toList();
   }
 }
