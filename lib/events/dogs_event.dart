@@ -11,3 +11,13 @@ class GetRandomImageByBreed extends DogsEvent {
     this.subBreed,
   });
 }
+
+class GetImagesByBreed extends DogsEvent {
+  final String breed;
+  final String? subBreed;
+
+  GetImagesByBreed({
+    required this.breed,
+    this.subBreed,
+  });
+}

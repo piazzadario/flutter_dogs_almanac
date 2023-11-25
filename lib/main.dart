@@ -1,4 +1,5 @@
 import 'package:dogs_almanac/bloc/dog_breeds_bloc.dart';
+import 'package:dogs_almanac/bloc/dog_images_list_bloc.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,15 @@ class DogsAlmanac extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DogBreedsBloc()..add(GetBreeds()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => DogBreedsBloc()..add(GetBreeds()),
+        ),
+        BlocProvider(
+          create: (_) => DogImagesListBloc(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

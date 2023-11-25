@@ -2,6 +2,7 @@ import 'package:dogs_almanac/bloc/dog_breeds_bloc.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/extensions/string_extension.dart';
+import 'package:dogs_almanac/pages/images_list_page.dart';
 import 'package:dogs_almanac/pages/random_pic_page.dart';
 import 'package:dogs_almanac/states/dog_breeds_state.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BreedsSearchPage extends StatelessWidget {
   final bool includeSubBreeds;
+  final bool isList;
   final String title;
   final TextEditingController _controller = TextEditingController();
 
   BreedsSearchPage({
     this.includeSubBreeds = false,
+    this.isList = false,
     required this.title,
     super.key,
   });
@@ -78,8 +81,15 @@ class BreedsSearchPage extends StatelessWidget {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) {
+                                      // TODO: fix
+                                      if (isList) {
+                                        return ImagesListPage(
+                                          breed: breed.split(' ').first,
+                                        );
+                                      }
                                       return RandomPicPage(
-                                          breed: breed.split(' ').first);
+                                        breed: breed.split(' ').first,
+                                      );
                                     },
                                   ),
                                 );
