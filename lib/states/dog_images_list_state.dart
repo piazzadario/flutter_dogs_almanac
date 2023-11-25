@@ -4,12 +4,12 @@ import 'package:equatable/equatable.dart';
 class DogImagesListState extends Equatable {
   final Map<String, BreedImages> map;
 
-  DogImagesListState({
+  const DogImagesListState({
     required this.map,
   });
 
   factory DogImagesListState.initial() {
-    return DogImagesListState(
+    return const DogImagesListState(
       map: {},
     );
   }
@@ -18,7 +18,9 @@ class DogImagesListState extends Equatable {
     MapEntry<String, BreedImages> breedImages,
   ) {
     return DogImagesListState(
-      map: map..addEntries([breedImages]),
+      map: {}
+        ..addAll(map)
+        ..addEntries([breedImages]),
     );
   }
 
