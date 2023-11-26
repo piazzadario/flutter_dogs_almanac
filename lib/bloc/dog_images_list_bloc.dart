@@ -3,9 +3,14 @@ import 'package:dogs_almanac/api.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/states/dog_images_list_state.dart';
+import 'package:http/http.dart' as http;
 
 class DogImagesListBloc extends Bloc<DogsEvent, DogImagesListState> {
-  DogImagesListBloc() : super(DogImagesListState.initial()) {
+  final http.Client client;
+
+  DogImagesListBloc({http.Client? client})
+      : client = client ?? http.Client(),
+        super(DogImagesListState.initial()) {
     on<GetImagesByBreed>(_onGetImagesByBreed);
   }
 
@@ -25,9 +30,9 @@ class DogImagesListBloc extends Bloc<DogsEvent, DogImagesListState> {
 
       final List<String> images;
       if (event.subBreed == null) {
-        images = await Api().getImagesByBreed(event.breed);
+        images = await Api(client: client).getImagesByBreed(event.breed);
       } else {
-        images = await Api()
+        images = await Api(client: client)
             .getImagesBySubBreed(breed: event.breed, subBreed: event.subBreed!);
       }
 

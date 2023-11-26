@@ -3,9 +3,11 @@ import 'package:dogs_almanac/api.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/states/dog_breeds_state.dart';
+import 'package:http/http.dart' as http;
 
 class DogBreedsBloc extends Bloc<DogsEvent, DogBreedsState> {
-  DogBreedsBloc() : super(DogBreedsState.initial()) {
+  final http.Client client;
+  DogBreedsBloc({http.Client? client})   : client = client ?? http.Client(),  super(DogBreedsState.initial()) {
     on<GetBreeds>(_onGetBreeds);
   }
 
@@ -15,7 +17,7 @@ class DogBreedsBloc extends Bloc<DogsEvent, DogBreedsState> {
         status: RequestStatus.pending,
       ));
 
-      final breeds = await Api().getAllBreeds();
+      final breeds = await Api(client: client).getAllBreeds();
       return emit(state.copyWith(
         status: RequestStatus.success,
         breeds: breeds,

@@ -1,10 +1,12 @@
-class Breed {
+import 'package:equatable/equatable.dart';
+
+class Breed extends Equatable {
   final String name;
   final List<String> subBreeds;
 
-  Breed({
+  const Breed({
     required this.name,
-    required this.subBreeds,
+    this.subBreeds = const [],
   });
 
   factory Breed.fromMapEntry(MapEntry entry) {
@@ -15,4 +17,10 @@ class Breed {
   }
 
   bool get hasSubBreeds => subBreeds.isNotEmpty;
+
+  @override
+  List<Object?> get props => [
+        name,
+        subBreeds,
+      ];
 }

@@ -3,9 +3,13 @@ import 'package:dogs_almanac/api.dart';
 import 'package:dogs_almanac/enum/request_status.dart';
 import 'package:dogs_almanac/events/dogs_event.dart';
 import 'package:dogs_almanac/states/dog_random_image_state.dart';
+import 'package:http/http.dart' as http;
 
 class DogRandomImageBloc extends Bloc<DogsEvent, DogRandomImageState> {
-  DogRandomImageBloc() : super(DogRandomImageState.initial()) {
+  final http.Client client;
+  DogRandomImageBloc({http.Client? client})
+      : client = client ?? http.Client(),
+        super(DogRandomImageState.initial()) {
     on<GetRandomImageByBreed>(_onGetRadomImage);
   }
 
@@ -20,9 +24,9 @@ class DogRandomImageBloc extends Bloc<DogsEvent, DogRandomImageState> {
 
       final String imageUrl;
       if (event.subBreed == null) {
-        imageUrl = await Api().getRandomImageByBreed(event.breed);
+        imageUrl = await Api(client: client).getRandomImageByBreed(event.breed);
       } else {
-        imageUrl = await Api().getRandomImageBySubBreed(
+        imageUrl = await Api(client: client).getRandomImageBySubBreed(
             breed: event.breed, subBreed: event.subBreed!);
       }
 

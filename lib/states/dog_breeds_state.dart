@@ -29,20 +29,6 @@ class DogBreedsState extends Equatable {
     );
   }
 
-  List<String> getAllSubBreeds() {
-    List<String> result = [];
-    for (final breed in breeds) {
-      if (breed.hasSubBreeds) {
-        result.addAll(
-            breed.subBreeds.map((subBreed) => '$subBreed ${breed.name}'));
-      } else {
-        result.add(breed.name);
-      }
-    }
-
-    return result;
-  }
-
   @override
   List<Object?> get props => [
         status,

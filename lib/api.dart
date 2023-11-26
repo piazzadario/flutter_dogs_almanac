@@ -12,7 +12,7 @@ class Api {
 
   Future<String> getRandomImageByBreed(String breed) async {
     final response =
-        await http.get(Uri.parse('$_baseUrl/breed/$breed/images/random'));
+        await client.get(Uri.parse('$_baseUrl/breed/$breed/images/random'));
     if (response.statusCode == 200) {
       return jsonDecode(response.body)['message'];
     }
@@ -21,7 +21,8 @@ class Api {
   }
 
   Future<List<String>> getImagesByBreed(String breed) async {
-    final response = await http.get(Uri.parse('$_baseUrl/breed/$breed/images'));
+    final response =
+        await client.get(Uri.parse('$_baseUrl/breed/$breed/images'));
     if (response.statusCode == 200) {
       return List.from(jsonDecode(response.body)['message']);
     }
@@ -33,7 +34,7 @@ class Api {
     required String breed,
     required String subBreed,
   }) async {
-    final response = await http
+    final response = await client
         .get(Uri.parse('$_baseUrl/breed/$breed/$subBreed/images/random'));
     if (response.statusCode == 200) {
       return jsonDecode(response.body)['message'];
@@ -47,7 +48,7 @@ class Api {
     required String subBreed,
   }) async {
     final response =
-        await http.get(Uri.parse('$_baseUrl/breed/$breed/$subBreed/images'));
+        await client.get(Uri.parse('$_baseUrl/breed/$breed/$subBreed/images'));
     if (response.statusCode == 200) {
       return List.from(jsonDecode(response.body)['message']);
     }
@@ -56,7 +57,7 @@ class Api {
   }
 
   Future<List<Breed>> getAllBreeds() async {
-    final response = await http.get(Uri.parse('$_baseUrl/breeds/list/all'));
+    final response = await client.get(Uri.parse('$_baseUrl/breeds/list/all'));
     if (response.statusCode == 200) {
       final breedsMap = jsonDecode(response.body)['message'] as Map;
       return breedsMap.entries.map(Breed.fromMapEntry).toList();
