@@ -31,16 +31,17 @@ class HomePage extends StatelessWidget {
                 height: 32,
               ),
               ElevatedButton(
+                key: const Key('random_image_by_breed_cta'),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) {
-                        return BreedsSearchPage(title: 'Random pic by breed');
+                        return BreedsSearchPage(title: 'Random image by breed');
                       },
                     ),
                   );
                 },
-                child: const Text('Random pic by breed'),
+                child: const Text('Random image by breed'),
               ),
               const SizedBox(
                 height: 12,
@@ -51,14 +52,14 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) {
                         return BreedsSearchPage(
-                          title: 'Random pic by sub-breed',
+                          title: 'Random image by sub-breed',
                           includeSubBreeds: true,
                         );
                       },
                     ),
                   );
                 },
-                child: const Text('Random pic by sub-breed'),
+                child: const Text('Random image by sub-breed'),
               ),
               const SizedBox(
                 height: 12,
@@ -69,14 +70,14 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) {
                         return BreedsSearchPage(
-                          title: 'Random pic by breed',
+                          title: 'All images by breed',
                           isList: true,
                         );
                       },
                     ),
                   );
                 },
-                child: const Text('All pics by breed'),
+                child: const Text('All image by breed'),
               ),
               const SizedBox(
                 height: 12,
@@ -87,7 +88,7 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) {
                         return BreedsSearchPage(
-                          title: 'Random pic by breed',
+                          title: 'All image by sub-breed',
                           isList: true,
                           includeSubBreeds: true,
                         );
@@ -95,7 +96,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text('All pics by sub-breed'),
+                child: const Text('All images by sub-breed'),
               ),
               const SizedBox(
                 height: 12,
