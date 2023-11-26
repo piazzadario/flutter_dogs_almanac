@@ -84,6 +84,7 @@ class BreedsSearchPage extends StatelessWidget {
                             final result = filteredBreeds.elementAt(index);
                             return _BreedSearchResultCard(
                               result,
+                              key: Key('${result.breed}_card'),
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(

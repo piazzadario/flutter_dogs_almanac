@@ -4,7 +4,11 @@ import 'package:dogs_almanac/models/breed.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
+  final http.Client client;
+
   static const String _baseUrl = 'https://dog.ceo/api';
+
+  Api({http.Client? client}) : client = client ?? http.Client();
 
   Future<String> getRandomImageByBreed(String breed) async {
     final response =

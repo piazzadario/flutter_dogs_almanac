@@ -34,10 +34,11 @@ class DogImageCard extends StatelessWidget {
         },
         errorBuilder: (_, __, ___) {
           return const Center(
-              child: Text(
-            'Impossible to load image',
-            textAlign: TextAlign.center,
-          ));
+            child: Text(
+              'Impossible to load image',
+              textAlign: TextAlign.center,
+            ),
+          );
         },
       ),
     );

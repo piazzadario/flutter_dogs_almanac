@@ -52,7 +52,7 @@ class RandomPicPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      DogImageCard(state.imageUrl!),
+                      DogImageCard(state.imageUrl!,key: Key('${breed}_image'),),
                       const SizedBox(
                         height: 12,
                       ),
