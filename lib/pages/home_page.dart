@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text('Random image by sub-breed'),
+                child: const Text('Random images by sub-breed'),
               ),
               const SizedBox(
                 height: 12,
